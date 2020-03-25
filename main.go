@@ -11,6 +11,7 @@ import (
 	"bufio"
 	"io/ioutil"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -27,11 +28,15 @@ func main() {
 	keys := make([]string, len(lines))
 	i := 0
 	for k := range lines {
-		if k!="" {
+		if k != "" {
 			keys[i] = k
 			i++
 		}
 	}
+
+	sort.Slice(keys, func(i int, j int) bool {
+		return strings.Compare(keys[i], keys[j]) == 0
+	})
 
 	join := strings.Join(keys, "\n")
 	_ = ioutil.WriteFile(fileName, []byte( join ), 0644)
